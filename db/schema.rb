@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_173456) do
+ActiveRecord::Schema.define(version: 2019_04_23_191053) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_173456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_filter_id"], name: "index_product_attributes_on_category_filter_id"
+    t.index ["product_id", "category_filter_id"], name: "index_product_attributes_on_product_id_and_category_filter_id", unique: true
     t.index ["product_id"], name: "index_product_attributes_on_product_id"
   end
 

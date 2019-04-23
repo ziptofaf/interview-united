@@ -26,4 +26,15 @@ RSpec.describe ProductAttribute, type: :model do
     expect(val2.valid?).to eq true
     expect(val2.string_value).to eq 'Tesla'
   end
+
+  it "is not possible to create a duplicate (two attributes that correspond to same product and same filter)" do
+    val = FactoryBot.create('ProductAttributes::IntegerAttribute', value: 5, product: @product,
+                           category_filter: @int_filter)
+    expect(val.id == nil).to eq false
+    expect {
+    FactoryBot.create('ProductAttributes::IntegerAttribute', value: 5, product: @product,
+                            category_filter: @int_filter)
+    }.to raise_error(ActiveRecord::RecordNotUnique)
+
+  end
 end
