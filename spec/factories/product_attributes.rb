@@ -4,33 +4,28 @@ FactoryBot.define do
     category_filter
     type { "" }
 
-    factory 'ProductAttributes::BooleanAttribute' do
+    factory 'ProductAttributes::BooleanAttribute', class: ProductAttributes::BooleanAttribute do
       value { true }
-      type { 'ProductAttributes::BooleanAttribute' }
       association :category_filter, factory: 'CategoryFilters::BooleanFilter'
     end
 
-    factory 'ProductAttributes::DecimalAttribute' do
+    factory 'ProductAttributes::DecimalAttribute', class: ProductAttributes::DecimalAttribute do
       value { 1.0 }
-      type { 'ProductAttributes::DecimalAttribute' }
       association :category_filter, factory: 'CategoryFilters::DecimalFilter'
     end
 
-    factory 'ProductAttributes::IntegerAttribute' do
+    factory 'ProductAttributes::IntegerAttribute', class: ProductAttributes::IntegerAttribute do
       value { 1 }
-      type { 'ProductAttributes::IntegerAttribute' }
       association :category_filter, factory: 'CategoryFilters::IntegerFilter'
     end
 
-    factory 'ProductAttributes::StringAttribute' do
+    factory 'ProductAttributes::StringAttribute', class: ProductAttributes::StringAttribute do
       value { "String" }
-      type { 'ProductAttributes::StringAttribute' }
       association :category_filter, factory: 'CategoryFilters::StringFilter'
     end
 
-    factory 'ProductAttributes::DictionaryAttribute' do
-      value { "Word" }
-      type { 'ProductAttributes::DictionaryAttribute' }
+    factory 'ProductAttributes::DictionaryAttribute', class: ProductAttributes::DictionaryAttribute do
+      value { "sample" }
       association :category_filter, factory: 'CategoryFilters::DictionaryFilter'
     end
   end

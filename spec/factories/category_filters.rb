@@ -4,29 +4,30 @@ FactoryBot.define do
     type { "" }
   end
 
-  factory 'CategoryFilters::BooleanFilter' do
+  factory 'CategoryFilters::BooleanFilter', class: CategoryFilters::BooleanFilter do
     name {"Bool"}
-    type {'CategoryFilters::BooleanFilter'}
   end
 
-  factory 'CategoryFilters::DecimalFilter' do
+  factory 'CategoryFilters::DecimalFilter', class: CategoryFilters::DecimalFilter do
     name {"Dec"}
-    type {'CategoryFilters::DecimalFilter'}
   end
 
-  factory 'CategoryFilters::IntegerFilter' do
+  factory 'CategoryFilters::IntegerFilter', class: CategoryFilters::IntegerFilter do
     name {"Int"}
-    type {'CategoryFilters::IntegerFilter'}
   end
 
-  factory 'CategoryFilters::StringFilter' do
+  factory 'CategoryFilters::StringFilter', class: CategoryFilters::StringFilter do
     name {"String"}
-    type {'CategoryFilters::StringFilter'}
   end
 
-  factory 'CategoryFilters::DictionaryFilter' do
+  factory 'CategoryFilters::DictionaryFilter', class: CategoryFilters::DictionaryFilter do
     name {"Dict"}
-    type {'CategoryFilters::DictionaryFilter'}
+    after :create do |model|
+      sample_value = DictionaryFilterValue.new
+      sample_value.name = "sample"
+      sample_value.category_filter = model
+      sample_value.save
+    end
   end
 
 

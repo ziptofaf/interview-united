@@ -1,14 +1,6 @@
 module ProductAttributes
-  class DictionaryAttribute < ProductAttribute
+  class DictionaryAttribute < StringAttribute
     validate :must_exist_in_dictionary
-
-    def value
-      string_value
-    end
-
-    def value=(val)
-      self.string_value = val
-    end
 
     private
 
