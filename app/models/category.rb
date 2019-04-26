@@ -47,7 +47,6 @@ class Category < ApplicationRecord
   private
 
   def common_filters_in_categories(categories)
-    p categories.map(&:name)
     categories_filters = categories.map(&:search_filters)
     categories_filters.inject(:&) # intersection between N arrays
   end
