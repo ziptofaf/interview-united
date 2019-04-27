@@ -1,48 +1,46 @@
 class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', foreign_key: 'parent_category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_category', dependent: :destroy
-  has_and_belongs_to_many :category_filters
+  has_many :category_filters_mappings, dependent: :destroy
+  has_many :category_filters, through: :category_filters_mappings
   after_create :copy_parent_filters
 
 
-  def copy_parent_filters
-    current_node = parent
 
+  def copy_parent_filters
     return unless parent # mozliwe z rootem
 
-    filters_arr = category_filters.map(&:id)
-    loop do
-      break if current_node.nil?
-
-      filters_to_add = current_node.category_filters.where.not(id: filters_arr).map(&:id)
-      filters_arr += filters_to_add
-      current_node = current_node.parent
-    end
-    filters_arr.each do |filter_id|
-      category_filters.push(CategoryFilter.find(filter_id))
-    end
+    self.category_filters = parent.category_filters
   end
 
+  # returns filters that should be searchable within a given category
   def search_filters
     return category_filters if tree_end?
 
-    end_nodes = []
-    queue = children.to_a
-    until queue.empty?
-      node = queue.pop
-      if node.tree_end?
-        end_nodes.push(node)
-      else
-        queue += node.children.to_a
-        queue.flatten!
-      end
-    end
+    reload
+    end_nodes = all_children.filter(&:tree_end?)
     common_filters_in_categories(end_nodes)
   end
 
   def tree_end?
+    reload
     children.empty?
   end
+
+  # unlike just children, this one goes down the entire tree
+  def all_children
+    reload
+    nodes = []
+    queue = children.to_a
+    until queue.empty?
+      node = queue.pop
+      nodes.push(node)
+      queue += node.children.to_a
+      queue.flatten!
+    end
+    nodes
+  end
+
 
   private
 

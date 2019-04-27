@@ -1,4 +1,6 @@
 class CategoryFilter < ApplicationRecord
-  has_and_belongs_to_many :categories
-  has_many :product_attributes
+  has_many :category_filters_mappings, dependent: :destroy
+  has_many :categories, through: :category_filters_mappings
+  has_many :product_attributes, dependent: :destroy
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_191053) do
+ActiveRecord::Schema.define(version: 2019_04_27_185704) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -19,16 +19,17 @@ ActiveRecord::Schema.define(version: 2019_04_23_191053) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories_category_filters", id: false, force: :cascade do |t|
-    t.integer "category_id", null: false
-    t.integer "category_filter_id", null: false
-  end
-
   create_table "category_filters", force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "category_filters_mappings", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.integer "category_filter_id", null: false
+    t.index ["category_id", "category_filter_id"], name: "category_category_filter_index", unique: true
   end
 
   create_table "dictionary_filter_values", force: :cascade do |t|

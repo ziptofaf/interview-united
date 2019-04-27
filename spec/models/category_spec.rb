@@ -13,8 +13,25 @@ RSpec.describe Category, type: :model do
     @nested_child = FactoryBot.create(:category, name: 'NestedChild', parent: @child)
   end
 
+  it 'correctly detects all children of a given node' do
+    all_children = @root.all_children
+    expect(all_children).to include(@child, @nested_child)
+  end
+
   it 'is correctly created and relationships to filters from parents are preserved' do
-    expect(@nested_child.category_filters).to eq [@filter, @nested_filter]
+    expect(@nested_child.category_filters).to include(@filter, @nested_filter)
+  end
+
+  it 'correctly deletes associations to filters to children when they are changed in root' do
+    @root.category_filters.destroy(@filter)
+    expect(@root.category_filters.to_a).to eq []
+    expect(@child.reload.category_filters.to_a).to eq [@nested_filter]
+  end
+
+  it 'correctly adds associations to filters to children when they are changed in root' do
+    filter = FactoryBot.create('CategoryFilters::BooleanFilter', name: 'TestFilter')
+    @root.category_filters.push(filter)
+    expect(@child.reload.category_filters).to include(@filter, @nested_filter, filter)
   end
 
   it 'correctly returns a filter list in an arbitrarily nested tree' do
@@ -37,27 +54,19 @@ RSpec.describe Category, type: :model do
     bmw_node.category_filters += [american_filter, engine_filter]
 
     root_filters = tree_root.search_filters
-    root_filters_expected = [price_filter, age_filter, engine_filter]
-    expect(includes_all_filters?(root_filters, root_filters_expected)).to eq true
+    expect(root_filters).to include(price_filter, age_filter, engine_filter)
 
     bmw_filters = bmw_node.search_filters
-    bmw_filters_expected = root_filters_expected + [american_filter]
-    expect(includes_all_filters?(bmw_filters, bmw_filters_expected)).to eq true
+    expect(bmw_filters).to include(price_filter, age_filter, engine_filter, american_filter)
 
     # adding a category right below the root with new set of filters should leave bmw unchanged but
     # vastly change root
 
     FactoryBot.create(:category, name: 'Food', parent: tree_root)
     root_filters = tree_root.reload.search_filters
-    expect(root_filters == [price_filter]).to eq true
-    bmw_filters = bmw_node.reload.search_filters
-    expect(includes_all_filters?(bmw_filters, bmw_filters_expected)).to eq true
+    expect(root_filters.to_a == [price_filter]).to eq true
+    bmw_filters = bmw_node.search_filters
+    expect(bmw_filters).to include(price_filter, age_filter, engine_filter, american_filter)
   end
 
-  def includes_all_filters?(filters_returned, filters_expected)
-    filters_expected.each do |filter|
-      return false unless filters_returned.include?(filter)
-    end
-    true
-  end
 end
