@@ -1,6 +1,10 @@
 module ProductAttributes
   class DecimalAttribute < ProductAttribute
 
+    def self.where_value(value)
+      where(decimal_value: value)
+    end
+
     def value
       decimal_value
     end

@@ -1,6 +1,10 @@
 module ProductAttributes
   class IntegerAttribute < ProductAttribute
 
+    def self.where_value(value)
+      where(integer_value: value)
+    end
+
     def value
       integer_value
     end

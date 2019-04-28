@@ -3,4 +3,10 @@ class ProductAttribute < ApplicationRecord
   belongs_to :category_filter
 
   attribute :value
+
+  validate :type_cannot_be_changed
+
+  def type_cannot_be_changed
+    errors.add(:type, 'Change of type is not allowed!') if type_changed? && persisted?
+  end
 end

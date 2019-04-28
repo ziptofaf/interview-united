@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Category Filters Mappings</h1>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>CategoryFilter</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @mappings.each do |mapping| %>
+    <tr>
+      <td><%= mapping.category.name %></td>
+      <td><%= link_to "#{mapping.category_filter.name}", category_filter_path(mapping.category_filter) %></td>
+      <% if should_be_destroyable?(mapping) %>
+        <td><%= link_to 'Destroy', category_category_filters_mapping_path(@category, mapping), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% else %>
+        <td>Can't be destroyed - filter originates from higher up the category tree</td>
+      <% end  %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mapping', new_category_category_filters_mapping_path %>

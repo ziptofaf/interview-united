@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @mapping.category.name %>
+</p>
+
+<p>
+  <strong>Category Filter:</strong>
+  <%= @mapping.category_filter.name %>
+</p>
+
+<%= link_to 'Edit', edit_category_category_filters_mapping_path(@category, @mapping) %> |
+<%= link_to 'Back', category_category_filters_mappings_path(@category) %>

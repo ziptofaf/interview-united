@@ -2,6 +2,10 @@ module ProductAttributes
   class DictionaryAttribute < StringAttribute
     validate :must_exist_in_dictionary
 
+    def self.where_value(value)
+      where(string_value: value)
+    end
+
     private
 
     def must_exist_in_dictionary

@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :category_filters_dictionary_filters, controller: :category_filters
 
   resources :products do
-    resources :product_attributes
+    resources :product_attributes, only: [:index, :show, :edit, :update]
   end
 end
