@@ -1,7 +1,5 @@
 module Forms
   class SearchFormBuilder
-    extend ActionView::Helpers
-
     def self.identifier_for_filter(filter)
       "filter_#{filter.id}"
     end
@@ -10,14 +8,14 @@ module Forms
       filter.name
     end
 
-    # transforms something like ProductAttributes::BooleanAttribute to boolean_attribute
+    # transforms something like CategoryFilters::BooleanFilter to boolean_filter
     def self.partial_view_name(filter)
       filter.type.split('::')[-1].underscore
     end
 
     def initialize(filters_params)
       @filters_params = filters_params
-      find_connected_category_filters
+      find_category_filters
     end
 
     def products(unfiltered_products)
@@ -29,6 +27,7 @@ module Forms
 
         partial_matches.push(filter.attribute_type.where_value(value).where(category_filter: filter).map(&:product_id))
       end
+      # if user clicks on search without actually selecting any filters
       return unfiltered_products if blanks == @filters_with_values.length
 
       Product.where(id: (partial_matches.inject(:&) & unfiltered_products_ids))
@@ -36,7 +35,7 @@ module Forms
 
     private
 
-    def find_connected_category_filters
+    def find_category_filters
       @filters_with_values = []
       regex = /filter_(\d+)/
       @filters_params.each_pair do |key, value|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy, :copy_filters_prompt, :copy_filters]
 
@@ -23,7 +25,10 @@ class CategoriesController < ApplicationController
 
   def copy_filters_prompt
     parent = @category.parent
-    redirect_to category_path(@category), notice: 'This is a root category, it cant have any copied attributes' and return unless parent
+    unless parent
+      redirect_to category_path(@category), notice: 'This is a root category, it cant have any copied attributes'
+      return
+    end
     @candidates = parent.children.where.not(id: @category.id).map { |c| [c.name, c.id] }
   end
 

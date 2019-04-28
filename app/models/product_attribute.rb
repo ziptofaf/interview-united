@@ -3,10 +3,14 @@ class ProductAttribute < ApplicationRecord
   belongs_to :product
   belongs_to :category_filter
 
+  # by defining this field in descendants we get a uniform interface for interacting with database
   attribute :value
 
-  validate :type_cannot_be_changed
+  def self.where_value(value)
+    raise "has to be defined in #{__FILE__}"
+  end
 
+  validate :type_cannot_be_changed
 
   private
 

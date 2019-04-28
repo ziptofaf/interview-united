@@ -35,15 +35,15 @@ RSpec.describe ProductsController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      name: 'ABC',
-      category: @category
+      name: 'TestProduct',
+      category_id: @category.id
     }
   end
 
   let(:invalid_attributes) do
     {
-      name: 'ABC',
-      category: nil
+      name: 'InvalidProduct',
+      category_id: nil
     }
   end
 
@@ -108,14 +108,16 @@ RSpec.describe ProductsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        {
+          name: 'TestProduct2'
+        }
       end
 
       it 'updates the requested product' do
         product = Product.create! valid_attributes
         put :update, params: { id: product.to_param, product: new_attributes }, session: valid_session
         product.reload
-        skip('Add assertions for updated state')
+        expect(product.name).to eq 'TestProduct2'
       end
 
       it 'redirects to the product' do
