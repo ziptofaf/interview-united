@@ -1,4 +1,4 @@
-<%= form_with(model: category_filter, local: true) do |form| %>
+<%= form_for(@category_filter, as: :category_filter, local: true) do |form| %>
   <% if category_filter.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(category_filter.errors.count, "error") %> prohibited this category_filter from being saved:</h2>
@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= form.select :type, CategoryFilter.descendants.map(&:name) %>
   </div>
 
   <div class="actions">

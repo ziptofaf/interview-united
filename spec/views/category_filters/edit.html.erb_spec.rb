@@ -15,8 +15,6 @@ RSpec.describe 'category_filters/edit', type: :view do
 
     assert_select 'form[action=?][method=?]', category_filter_path(@category_filter), 'post' do
       assert_select 'input[name=?]', 'category_filter[name]'
-
-      assert_select 'input[name=?]', 'category_filter[type]'
     end
   end
 end

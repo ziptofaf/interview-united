@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -15,5 +17,10 @@ module InterviewUnited
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # not necessary for production but important in other environments, otherwise
+    # descendants of these two classes wouldn't be auto-loaded until use causing bugs in selects etc
+    config.eager_load_paths += Dir[Rails.root.join('app', 'models', 'product_attributes')]
+    config.eager_load_paths += Dir[Rails.root.join('app', 'models', 'category_filters')]
   end
 end
