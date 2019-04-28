@@ -20,6 +20,12 @@ class CategoryFiltersMapping < ApplicationRecord
       mapping.category_filter_id = category_filter_id
       mapping.save!
     end
+    # updates products belonging to given category tree accordingly adding and deleting attributes along the way
+
+    category.products.each(&:touch)
+    category.all_children.each do |child|
+      child.products.each(&:touch)
+    end
   end
 
   def destroy_down_the_category_tree
@@ -31,6 +37,12 @@ class CategoryFiltersMapping < ApplicationRecord
 
       mapping.skip_tree_lookup = true
       mapping.destroy!
+    end
+    # updates products belonging to given category tree accordingly adding and deleting attributes along the way
+
+    category.products.each(&:touch)
+    category.all_children.each do |child|
+      child.products.each(&:touch)
     end
   end
 end

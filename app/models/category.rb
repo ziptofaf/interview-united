@@ -1,13 +1,20 @@
+# frozen_string_literal: true
+
 class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', foreign_key: 'parent_category_id', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_category_id', dependent: :destroy
   has_many :category_filters_mappings, dependent: :destroy
   has_many :category_filters, through: :category_filters_mappings
+  has_many :products
+
+  scope :without_children, lambda {
+                             joins('LEFT OUTER JOIN categories as children ON categories.id = children.parent_category_id')
+                               .where(children: { id: nil })
+                           }
+
   after_create :copy_parent_filters
 
   validates_length_of :name, minimum: 2
-
-
 
   def copy_parent_filters
     return unless parent # mozliwe z rootem
@@ -49,12 +56,10 @@ class Category < ApplicationRecord
     nodes
   end
 
-
   private
 
   def common_filters_in_categories(categories)
     categories_filters = categories.map(&:search_filters)
     categories_filters.inject(:&) # intersection between N arrays
   end
-
 end

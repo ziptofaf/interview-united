@@ -15,6 +15,7 @@ class Product < ApplicationRecord
   private
 
   def category_must_have_no_children
+    return unless category
     return if category.tree_end?
 
     errors.add(:category, 'must have no further children (end of the tree)')
