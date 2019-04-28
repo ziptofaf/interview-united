@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   root 'search#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :categories do
+    get :copy_filters_prompt, on: :member
+    post :copy_filters, on: :member
     resources :category_filters_mappings
   end
   resources :category_filters do

@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :copy_filters_prompt, :copy_filters]
 
   # GET /categories
   # GET /categories.json
@@ -19,6 +19,19 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+  end
+
+  def copy_filters_prompt
+    parent = @category.parent
+    redirect_to category_path(@category), notice: 'This is a root category, it cant have any copied attributes' and return unless parent
+    @candidates = parent.children.where.not(id: @category.id).map { |c| [c.name, c.id] }
+  end
+
+  def copy_filters
+    to_copy_from = Category.find_by(id: category_params[:copy_from_id])
+    redirect_to root_path and return unless to_copy_from # simplified error checking, just to show it's there
+    @category.copy_filters_from(to_copy_from)
+    redirect_to category_category_filters_mappings_path(@category), notice: 'Filters have been copied'
   end
 
   # POST /categories
@@ -70,6 +83,6 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def category_params
-    params.require(:category).permit(:name, :parent_category_id)
+    params.require(:category).permit(:name, :parent_category_id, :copy_from_id)
   end
 end

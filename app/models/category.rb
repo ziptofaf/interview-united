@@ -16,10 +16,20 @@ class Category < ApplicationRecord
 
   validates_length_of :name, minimum: 2
 
+  #needed for copy_filters_from controller action
+  attribute :copy_from_id
+
   def copy_parent_filters
     return unless parent # mozliwe z rootem
 
     self.category_filters = parent.category_filters
+  end
+
+  def copy_filters_from(category)
+    lacking_filters = category.category_filters.where.not(id: category_filters.map(&:id))
+    lacking_filters.each do |filter|
+      category_filters.push(filter)
+    end
   end
 
   # returns filters that should be searchable within a given category

@@ -1,0 +1,11 @@
+<%= form_for :category, url: copy_filters_category_path(@category) do |form| %>
+  <div class="field">
+    <%= form.label :copy_from_id %>
+    <%= form.select :copy_from_id, @candidates %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>
