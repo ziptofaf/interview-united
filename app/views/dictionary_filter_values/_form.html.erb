@@ -1,0 +1,24 @@
+<%= form_for [@category_filter, @dictionary_filter_value], url: @url do |form| %>
+
+  <% if @dictionary_filter_value.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dictionary_filter_value.errors.count, "error") %> prohibited this category_filter from being saved:</h2>
+
+      <ul>
+        <% @dictionary_filter_value.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

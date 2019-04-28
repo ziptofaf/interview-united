@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Dictionary Filter Value</h1>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>Value</th>
+    <th>Category Filter</th>
+    <th colspan=3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @dictionary_filter_values.each do |dictionary_filter_value| %>
+    <tr>
+      <td><%= dictionary_filter_value.name %></td>
+      <td><%= link_to "#{dictionary_filter_value.category_filter.name}", category_filter_path(dictionary_filter_value.category_filter) %></td>
+      <td><%= link_to 'Show', category_filter_dictionary_filter_value_path(@category_filter, dictionary_filter_value) %></td>
+      <td><%= link_to 'Edit', edit_category_filter_dictionary_filter_value_path(@category_filter, dictionary_filter_value) %></td>
+      <td><%= link_to 'Destroy', category_filter_dictionary_filter_value_path(@category_filter, dictionary_filter_value), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<br/>
+<%= link_to 'New Dictionary Filter Value', new_category_filter_dictionary_filter_value_path(@category_filter) %>
