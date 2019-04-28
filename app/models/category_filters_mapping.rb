@@ -10,6 +10,7 @@ class CategoryFiltersMapping < ApplicationRecord
   private
 
   def build_down_the_category_tree
+    # this avoids repeating same operation recursively for every descendant of a given node
     return if skip_tree_lookup
 
     category.all_children.each do |child|

@@ -7,5 +7,9 @@ module CategoryFilters
     def value
       string_value
     end
+
+    def attribute_type
+      ProductAttributes::StringAttribute
+    end
   end
 end

@@ -8,5 +8,9 @@ module CategoryFilters
     def value
       boolean_value
     end
+
+    def attribute_type
+      ProductAttributes::BooleanAttribute
+    end
   end
 end

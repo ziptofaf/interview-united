@@ -7,5 +7,9 @@ module CategoryFilters
     def value
       decimal_value
     end
+
+    def attribute_type
+      ProductAttributes::DecimalAttribute
+    end
   end
 end

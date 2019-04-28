@@ -10,9 +10,13 @@ module CategoryFilters
       string_value
     end
 
-
     def available_values
       dictionary_filter_values.map(&:name)
     end
+
+    def attribute_type
+      ProductAttributes::DictionaryAttribute
+    end
+
   end
 end

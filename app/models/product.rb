@@ -11,6 +11,15 @@ class Product < ApplicationRecord
     existing_attributes == filters_ids.count
   end
 
+  def build_lacking_attributes
+    category.category_filters.each do |filter|
+      next if product_attributes.exists?(category_filter: filter)
+
+      prod_attr = filter.attribute_type.new
+      prod_attr.save!
+    end
+  end
+
   private
 
   def category_must_have_no_children

@@ -7,5 +7,9 @@ module CategoryFilters
     def value
       integer_value
     end
+
+    def attribute_type
+      ProductAttributes::IntegerAttribute
+    end
   end
 end
