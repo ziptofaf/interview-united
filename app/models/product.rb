@@ -6,12 +6,6 @@ class Product < ApplicationRecord
   validate :category_must_have_no_children
   after_save :destroy_excessive_attributes, :build_lacking_attributes
 
-  def all_attributes_defined?
-    filters_ids = category.category_filters.map(&:id)
-    existing_attributes = product_attributes.where(category_filter_id: filters_ids).count
-    existing_attributes == filters_ids.count
-  end
-
   private
 
   def category_must_have_no_children

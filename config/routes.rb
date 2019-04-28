@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'search/index'
+  get 'search/filtered'
+  root 'search#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :categories do
     resources :category_filters_mappings
