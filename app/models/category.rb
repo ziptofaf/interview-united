@@ -5,6 +5,8 @@ class Category < ApplicationRecord
   has_many :category_filters, through: :category_filters_mappings
   after_create :copy_parent_filters
 
+  validates_length_of :name, minimum: 2
+
 
 
   def copy_parent_filters
