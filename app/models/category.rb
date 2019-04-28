@@ -1,6 +1,6 @@
 class Category < ApplicationRecord
-  belongs_to :parent, class_name: 'Category', foreign_key: 'parent_category', optional: true
-  has_many :children, class_name: 'Category', foreign_key: 'parent_category', dependent: :destroy
+  belongs_to :parent, class_name: 'Category', foreign_key: 'parent_category_id', optional: true
+  has_many :children, class_name: 'Category', foreign_key: 'parent_category_id', dependent: :destroy
   has_many :category_filters_mappings, dependent: :destroy
   has_many :category_filters, through: :category_filters_mappings
   after_create :copy_parent_filters
@@ -27,6 +27,12 @@ class Category < ApplicationRecord
   def tree_end?
     reload
     children.empty?
+  end
+
+  def parent_filters
+    return CategoryFilters.none unless parent
+
+    parent.category_filters
   end
 
   # unlike just children, this one goes down the entire tree

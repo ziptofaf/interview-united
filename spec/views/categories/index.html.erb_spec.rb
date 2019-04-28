@@ -6,19 +6,18 @@ RSpec.describe 'categories/index', type: :view do
   before(:each) do
     assign(:categories, [
              Category.create!(
-               name: 'Name',
-               parent_category: 2
+               name: 'Name1',
              ),
              Category.create!(
-               name: 'Name',
-               parent_category: 2
+               name: 'Name2',
              )
            ])
   end
 
   it 'renders a list of categories' do
     render
-    assert_select 'tr>td', text: 'Name'.to_s, count: 2
-    assert_select 'tr>td', text: 2.to_s, count: 2
+    assert_select 'tr>td', text: 'Name1', count: 1
+    assert_select 'tr>td', text: 'Name2', count: 1
+    assert_select 'tr>td', text: 'No parent', count: 2
   end
 end

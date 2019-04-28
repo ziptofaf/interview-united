@@ -62,13 +62,14 @@ class CategoryFiltersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category_filter
-      @category_filter = CategoryFilter.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_filter_params
-      params.require(:category_filter).permit(:name, :type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category_filter
+    @category_filter = CategoryFilter.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_filter_params
+    params.require(:category_filter).permit(:name, :type)
+  end
 end

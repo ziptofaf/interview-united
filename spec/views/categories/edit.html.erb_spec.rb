@@ -6,7 +6,6 @@ RSpec.describe 'categories/edit', type: :view do
   before(:each) do
     @category = assign(:category, Category.create!(
       name: 'MyString',
-      parent_category: 1
     ))
   end
 
@@ -17,7 +16,7 @@ RSpec.describe 'categories/edit', type: :view do
 
       assert_select 'input[name=?]', 'category[name]'
 
-      assert_select 'input[name=?]', 'category[parent_category]'
+      assert_select 'input[name=?]', 'category[parent_category_id]'
     end
   end
 end
