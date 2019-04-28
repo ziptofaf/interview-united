@@ -12,5 +12,9 @@ module ProductAttributes
     def value=(val)
       self.string_value = val
     end
+    
+    def field_type_in_form
+      'text_field'
+    end
   end
 end

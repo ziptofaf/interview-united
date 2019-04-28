@@ -1,0 +1,36 @@
+<%= form_for [@product, @product_attribute], as: :product_attribute do |form| %>
+
+  <% if @product_attribute.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@product_attribute.errors.count, "error") %> prohibited this product_attribute from being saved:</h2>
+
+      <ul>
+        <% @product_attribute.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :value %>
+    <%= form.public_send(@product_attribute.field_type_in_form, :value) %>
+    <%# Bit ugly in case it was extended to more filters but works fine with just five.
+    It would be possible to add a custom decorator that would generate such fields otherwise %>
+    <% if @product_attribute.type.to_s == 'ProductAttributes::DictionaryAttribute' %>
+      <p>Allowed values<br/></p>
+      <ul class="list-group">
+      <% @product_attribute.category_filter.available_values.each do |value| %>
+          <li class="list-group-item">
+            <%= value %>
+          </li>
+      <% end  %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

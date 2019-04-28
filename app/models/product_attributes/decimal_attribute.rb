@@ -12,5 +12,10 @@ module ProductAttributes
     def value=(val)
       self.decimal_value = val
     end
+
+    def field_type_in_form
+      'number_field'
+    end
+
   end
 end

@@ -7,7 +7,7 @@
     <tr>
       <th>Name</th>
       <th>Parent category</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -16,6 +16,7 @@
       <tr>
         <td><%= category.name %></td>
         <td><%= category.parent.try(&:name) || 'No parent' %></td>
+        <td><%= link_to 'Manage filters', category_category_filters_mappings_path(category) %></td>
         <td><%= link_to 'Show', category %></td>
         <td><%= link_to 'Edit', edit_category_path(category) %></td>
         <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>

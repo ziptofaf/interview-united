@@ -12,5 +12,9 @@ module ProductAttributes
     def value=(val)
       self.boolean_value = val
     end
+
+    def field_type_in_form
+      'check_box'
+    end
   end
 end

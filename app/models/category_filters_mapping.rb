@@ -3,7 +3,7 @@ class CategoryFiltersMapping < ApplicationRecord
   belongs_to :category_filter
 
   after_create :build_down_the_category_tree
-  before_destroy :destroy_down_the_category_tree
+  after_destroy :destroy_down_the_category_tree
 
   attr_accessor :skip_tree_lookup
 
@@ -22,9 +22,9 @@ class CategoryFiltersMapping < ApplicationRecord
     end
     # updates products belonging to given category tree accordingly adding and deleting attributes along the way
 
-    category.products.each(&:touch)
+    category.products.each(&:save)
     category.all_children.each do |child|
-      child.products.each(&:touch)
+      child.products.each(&:save)
     end
   end
 
@@ -40,9 +40,9 @@ class CategoryFiltersMapping < ApplicationRecord
     end
     # updates products belonging to given category tree accordingly adding and deleting attributes along the way
 
-    category.products.each(&:touch)
+    category.products.each(&:save)
     category.all_children.each do |child|
-      child.products.each(&:touch)
+      child.products.each(&:save)
     end
   end
 end

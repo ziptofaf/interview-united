@@ -1,0 +1,3 @@
+class DictionaryFilterValuesController < ApplicationController
+
+end

@@ -6,6 +6,10 @@ module ProductAttributes
       where(string_value: value)
     end
 
+    def field_type_in_form
+      'text_field'
+    end
+
     private
 
     def must_exist_in_dictionary

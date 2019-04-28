@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :categories do
     resources :category_filters_mappings
   end
-  resources :category_filters
+  resources :category_filters do
+    resources :dictionary_filter_values
+  end
   # For now they all lead to one place but this approach makes it easier to split them into unique controllers later on
   resources :category_filters_boolean_filters, controller: :category_filters
   resources :category_filters_integer_filters, controller: :category_filters
@@ -12,6 +14,11 @@ Rails.application.routes.draw do
   resources :category_filters_dictionary_filters, controller: :category_filters
 
   resources :products do
-    resources :product_attributes, only: [:index, :show, :edit, :update]
+    resources :product_attributes, only: [:index, :edit, :update]
+    resources :product_attributes_boolean_attributes, controller: :product_attributes
+    resources :product_attributes_integer_attributes, controller: :product_attributes
+    resources :product_attributes_decimal_attributes, controller: :product_attributes
+    resources :product_attributes_string_attributes, controller: :product_attributes
+    resources :product_attributes_dictionary_attributes, controller: :product_attributes
   end
 end
