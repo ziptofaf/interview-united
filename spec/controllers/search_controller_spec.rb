@@ -11,11 +11,4 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-  describe "GET #filtered" do
-    it "returns http success" do
-      get :filtered
-      expect(response).to have_http_status(:success)
-    end
-  end
-
 end

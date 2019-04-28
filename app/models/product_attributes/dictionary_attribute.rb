@@ -7,7 +7,11 @@ module ProductAttributes
     end
 
     def field_type_in_form
-      'text_field'
+      'select'
+    end
+
+    def extra_fields_in_form
+      [category_filter.available_values]
     end
 
     private

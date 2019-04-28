@@ -1,0 +1,2 @@
+<%= ff.label Forms::SearchFormBuilder.identifier_for_filter(filter), Forms::SearchFormBuilder.name_for_filter(filter) %><br/>
+<%= ff.select(Forms::SearchFormBuilder.identifier_for_filter(filter), [[true, 1], [false, 0]], include_blank: 'Both') %>

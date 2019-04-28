@@ -2,8 +2,7 @@
   <%= f.hidden_field :category_id, value: @category.id %>
     <%= f.fields_for :filters do |ff| %>
       <% @category.search_filters.each do |filter| %>
-        <%= ff.label Forms::SearchFormBuilder.identifier_for_filter(filter), Forms::SearchFormBuilder.name_for_filter(filter) %><br/>
-        <%= ff.public_send(filter.field_type_in_form, Forms::SearchFormBuilder.identifier_for_filter(filter)) %>
+        <%= render "/search/category_filters/#{Forms::SearchFormBuilder.partial_view_name(filter)}", ff: ff, filter: filter %>
         <br/>
       <% end  %>
     <% end %>

@@ -1,0 +1,2 @@
+<%= ff.label Forms::SearchFormBuilder.identifier_for_filter(filter), Forms::SearchFormBuilder.name_for_filter(filter) %><br/>
+<%= ff.public_send(filter.field_type_in_form, Forms::SearchFormBuilder.identifier_for_filter(filter), step: 0.01) %>

@@ -13,14 +13,14 @@
 ActiveRecord::Schema.define(version: 2019_04_28_065346) do
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "parent_category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "category_filters", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_04_28_065346) do
 
   create_table "dictionary_filter_values", force: :cascade do |t|
     t.integer "category_filter_id"
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_filter_id"], name: "index_dictionary_filter_values_on_category_filter_id"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2019_04_28_065346) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"

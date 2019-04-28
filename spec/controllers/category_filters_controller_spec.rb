@@ -113,7 +113,7 @@ RSpec.describe CategoryFiltersController, type: :controller do
         category_filter = CategoryFilter.create! valid_attributes
         put :update, params: { id: category_filter.to_param, category_filter: new_attributes }, session: valid_session
         category_filter.reload
-        skip('Add assertions for updated state')
+        expect(category_filter.name).to eq 'ChangedFilterName'
       end
 
       it 'redirects to the category_filter' do

@@ -15,19 +15,7 @@
 
   <div class="field">
     <%= form.label :value %>
-    <%= form.public_send(@product_attribute.field_type_in_form, :value) %>
-    <%# Bit ugly in case it was extended to more filters but works fine with just five.
-    It would be possible to add a custom decorator that would generate such fields otherwise %>
-    <% if @product_attribute.type.to_s == 'ProductAttributes::DictionaryAttribute' %>
-      <p>Allowed values<br/></p>
-      <ul class="list-group">
-      <% @product_attribute.category_filter.available_values.each do |value| %>
-          <li class="list-group-item">
-            <%= value %>
-          </li>
-      <% end  %>
-      </ul>
-    <% end %>
+    <%= form.public_send(@product_attribute.field_type_in_form, :value, *@product_attribute.extra_fields_in_form) %>
   </div>
 
   <div class="actions">

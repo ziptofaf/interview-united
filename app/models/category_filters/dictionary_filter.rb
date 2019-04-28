@@ -11,7 +11,11 @@ module CategoryFilters
     end
 
     def field_type_in_form
-      'text_field'
+      'select'
+    end
+
+    def extra_fields_in_form
+      [available_values]
     end
 
   end

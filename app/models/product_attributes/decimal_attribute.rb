@@ -17,5 +17,9 @@ module ProductAttributes
       'number_field'
     end
 
+    def extra_fields_in_form
+      [step: 0.01]
+    end
+
   end
 end
