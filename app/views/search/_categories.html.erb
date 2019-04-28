@@ -1,0 +1,8 @@
+<ul class="list-group">
+  <% if @category.parent %>
+    <%= link_to "../#{@category.parent.name}", search_index_path(category_id: @category.parent) %>
+  <% end  %>
+  <% @category.children.each do |child| %>
+    <%= link_to child.name, search_index_path(category_id: child.id) %>
+  <% end %>
+</ul>

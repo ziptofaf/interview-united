@@ -1,34 +1,12 @@
 <div class="row">
-  <div class="col-md-2">
-    <ul class="list-group">
-      <% if @category.parent %>
-      <%= link_to "../#{@category.parent.name}", search_index_path(category_id: @category.parent) %>
-      <% end  %>
-      <% @category.children.each do |child| %>
-        <%= link_to child.name, search_index_path(category_id: child.id) %>
-      <% end %>
-    </ul>
+  <div class="col-md-3">
+    <%= render 'categories' %>
+    <br/>
+    <%= render 'filters' %>
   </div>
-  <div class="col-md-10">
-    <table class="table table-bordered table-striped">
-      <thead>
-      <tr>
-        <th>Product name</th>
-        <th>Attributes</th>
-      </tr>
-      </thead>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name %></td>
-        <td>
-          <ul class="list-group">
-            <% product.product_attributes.each do |attr| %>
-              <li class="list-group-item"><%= attr.category_filter.name %>: <%= attr.value %></li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-    <% end %>
-    </table>
+  <div class="col-md-9">
+    <%= render 'products' %>
   </div>
+  <br/>
+
 </div>

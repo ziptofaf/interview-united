@@ -10,5 +10,9 @@ module CategoryFilters
       ProductAttributes::DictionaryAttribute
     end
 
+    def field_type_in_form
+      'text_field'
+    end
+
   end
 end

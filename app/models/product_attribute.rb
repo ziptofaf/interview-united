@@ -6,6 +6,8 @@ class ProductAttribute < ApplicationRecord
 
   validate :type_cannot_be_changed
 
+  private
+
   def type_cannot_be_changed
     errors.add(:type, 'Change of type is not allowed!') if type_changed? && persisted?
   end

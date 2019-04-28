@@ -4,4 +4,8 @@ module CategoryFilters
       ProductAttributes::IntegerAttribute
     end
   end
+
+  def field_type_in_form
+    'number_field'
+  end
 end
